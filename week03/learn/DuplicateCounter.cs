@@ -25,6 +25,17 @@
     private static int CountDuplicates(int[] data)
     {
         // Add code here.
-        return 0;
+        int count = 0;
+        for (int i = 0; i < data.Length; i++)
+        {
+            for (int j = i + 1; j < data.Length; j++)
+            {
+                if (data[i] == data[j]){
+                    count++;
+                    break;
+                }
+            }
+        }
+        return count;
     }
 }
