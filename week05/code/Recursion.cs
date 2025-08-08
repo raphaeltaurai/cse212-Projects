@@ -14,6 +14,7 @@ public static class Recursion
     /// </summary>
     public static int SumSquaresRecursive(int n)
     {
+        // Problem 1: Recursive Squares Sum
         if (n <= 0)
             return 0;
         return n * n + SumSquaresRecursive(n - 1);
@@ -40,12 +41,13 @@ public static class Recursion
     /// </summary>
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
+        // Problem 2: Permutations Choose
         if (word.Length == size) {
             results.Add(word);
             return;
         }
         for (int i = 0; i < letters.Length; i++) {
-            
+            // Choose letter at i, remove it from available letters
             string nextWord = word + letters[i];
             string remaining = letters.Remove(i, 1);
             PermutationsChoose(results, remaining, size, nextWord);
@@ -96,7 +98,7 @@ public static class Recursion
     /// </summary>
     public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null)
     {
-    
+        // Problem 3: Climbing Stairs with Memoization
         if (remember == null)
             remember = new Dictionary<int, decimal>();
         if (s == 0)
@@ -129,14 +131,15 @@ public static class Recursion
     /// </summary>
     public static void WildcardBinary(string pattern, List<string> results)
     {
+        // Problem 4: Wildcard Binary Patterns
         int idx = pattern.IndexOf('*');
         if (idx == -1) {
             results.Add(pattern);
             return;
         }
-        
+        // Replace * with '0' and recurse
         WildcardBinary(pattern.Substring(0, idx) + "0" + pattern.Substring(idx + 1), results);
-        
+        // Replace * with '1' and recurse
         WildcardBinary(pattern.Substring(0, idx) + "1" + pattern.Substring(idx + 1), results);
     }
 
@@ -146,27 +149,27 @@ public static class Recursion
     /// </summary>
     public static void SolveMaze(List<string> results, Maze maze, int x = 0, int y = 0, List<ValueTuple<int, int>>? currPath = null)
     {
-        
+        // Problem 5: Maze Solver
         if (currPath == null) {
             currPath = new List<ValueTuple<int, int>>();
         }
-        
+        // If not a valid move, return
         if (!maze.IsValidMove(currPath, x, y))
             return;
-        
+        // Add current position to path
         currPath.Add((x, y));
-        
+        // If at the end, add path to results
         if (maze.IsEnd(x, y)) {
             results.Add(currPath.AsString());
             currPath.RemoveAt(currPath.Count - 1);
             return;
         }
-        
+        // Explore all four directions
         SolveMaze(results, maze, x + 1, y, new List<ValueTuple<int, int>>(currPath)); // right
         SolveMaze(results, maze, x - 1, y, new List<ValueTuple<int, int>>(currPath)); // left
         SolveMaze(results, maze, x, y + 1, new List<ValueTuple<int, int>>(currPath)); // down
         SolveMaze(results, maze, x, y - 1, new List<ValueTuple<int, int>>(currPath)); // up
-        
+        // Remove current position before backtracking
         currPath.RemoveAt(currPath.Count - 1);
     }
 }
